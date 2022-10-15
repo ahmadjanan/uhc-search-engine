@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>UHC Database</title>
+    <script src="https://kit.fontawesome.com/7f6d2012d0.js" ></script>
+    <link rel="stylesheet" href="static/uhc-search.css"/>
+  </head>
+  <body>
+    <div class="container">
+      <form method="post" class="search-bar">
+        <input type="text" name="search" placeholder="Enter company name/ein ..." required/>
+        <button type="submit" value="Search"> <i class="fas fa-search"></i> </button>
+      </form>
+    </div>
+
+    {% if company_data | length != 0 %}
+    <br>
+    <h1>{{ company_data["name"] }}</h1>
+    <br><hr><br>
+    <table id="data-table">
+      <tr>
+        <td>Plan</td>
+        <td>Files</td>
+      </tr>
+      {% for plan in company_data["plans"] %} 
+        <tr>
+          <td>{{ plan["plan_name"] }}</td>
+          <td>
+            {% for url in plan["urls"] %}
+              <a href={{ url }}>{{ url }}</a> <br>
+            {% endfor %}
+          </td>
+        </tr> 
+      {% endfor %}
+      <br>
+
+    </table>
+    {% else %}
+    <h1>No search results.<h1>
+    {% endif %}
+    
+  </body>
+</html>
